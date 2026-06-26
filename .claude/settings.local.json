@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm list -g pm2 --depth=0 2>$null)",
+      "PowerShell(npm list -g serve --depth=0 2>$null)",
+      "PowerShell(npm install -g serve 2>&1)",
+      "PowerShell(pm2 delete all 2>$null)",
+      "PowerShell(pm2 start \"F:\\\\EDP\\\\Project\\\\PerformaLayanan\\\\ecosystem.config.js\" 2>&1)",
+      "PowerShell(\\(Get-Command serve\\).Source)",
+      "PowerShell(pm2 list 2>&1)",
+      "PowerShell(New-NetFirewallRule -DisplayName \"PerformaLayanan-Frontend-3000\" -Direction Inbound -Protocol TCP -LocalPort 3000 -Action Allow -ErrorAction SilentlyContinue)",
+      "PowerShell(New-NetFirewallRule -DisplayName \"PerformaLayanan-Admin-3001\" -Direction Inbound -Protocol TCP -LocalPort 3001 -Action Allow -ErrorAction SilentlyContinue)",
+      "PowerShell(New-NetFirewallRule -DisplayName \"PerformaLayanan-Backend-5000\" -Direction Inbound -Protocol TCP -LocalPort 5000 -Action Allow -ErrorAction SilentlyContinue)",
+      "PowerShell(netsh advfirewall firewall show rule name=\"PerformaLayanan-Backend-5000\" 2>&1)",
+      "PowerShell(netsh advfirewall firewall add rule name=\"PerformaLayanan-Frontend-3000\" dir=in action=allow protocol=TCP localport=3000 2>&1)",
+      "PowerShell(pm2 save 2>&1)",
+      "PowerShell(npm list -g pm2-windows-startup --depth=0 2>$null)",
+      "PowerShell(pm2-windows-startup install 2>&1)",
+      "PowerShell(& \"C:\\\\Users\\\\yulianto.RSUS\\\\AppData\\\\Roaming\\\\npm\\\\pm2-windows-startup\" install 2>&1)",
+      "PowerShell(node \"C:\\\\Users\\\\yulianto.RSUS\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\pm2-windows-startup\\\\index.js\" install 2>&1)",
+      "PowerShell($results = @\\(\\); foreach \\($port in @\\(3000, 3001, 5000\\)\\) { try { $r = Invoke-WebRequest -Uri \"http://localhost:$port\" -UseBasicParsing -TimeoutSec 5; $results += \"Port $port : $\\($r.StatusCode\\) OK\" } catch { $results += \"Port $port : $\\($_.Exception.Message -replace '\\\\n',' '\\)\" } }; $results)",
+      "PowerShell(mkcert --version 2>&1)",
+      "PowerShell(choco --version 2>&1)",
+      "PowerShell(scoop --version 2>&1)",
+      "PowerShell(New-Item -ItemType Directory -Force \"F:\\\\EDP\\\\ssl\" | Out-Null; Invoke-WebRequest -Uri \"https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-windows-amd64.exe\" -OutFile \"F:\\\\EDP\\\\ssl\\\\mkcert.exe\" -UseBasicParsing; Write-Host \"Downloaded: $\\(\\(Get-Item 'F:\\\\EDP\\\\ssl\\\\mkcert.exe'\\).Length\\) bytes\")",
+      "PowerShell(pm2 stop performa-frontend performa-admin performa-backend 2>&1)",
+      "PowerShell(pm2 reload \"F:\\\\EDP\\\\Project\\\\PerformaLayanan\\\\ecosystem.config.js\" 2>&1)",
+      "PowerShell(pm2 logs performa-frontend --lines 20 --nostream 2>&1)",
+      "PowerShell(pm2 delete performa-frontend performa-admin 2>&1)",
+      "PowerShell(pm2 start \"F:\\\\EDP\\\\Project\\\\PerformaLayanan\\\\ecosystem.config.js\" --only performa-frontend,performa-admin 2>&1)",
+      "PowerShell(Start-Sleep -Seconds 2; $results = @\\(\\); foreach \\($port in @\\(3000, 3001, 5000\\)\\) { try { $r = Invoke-WebRequest -Uri \"https://localhost:$port\" -UseBasicParsing -TimeoutSec 5; $results += \"Port $port : $\\($r.StatusCode\\) OK \\(HTTPS\\)\" } catch { $results += \"Port $port : FAIL - $\\($_.Exception.Message -replace '\\\\n',' '\\)\" } }; $results)",
+      "PowerShell(\\(Get-Command nginx\\).Source 2>&1)",
+      "PowerShell(& \"C:\\\\nginx-1.28.2\\\\nginx.exe\" -t -c \"C:\\\\nginx-1.28.2\\\\conf\\\\nginx.conf\" 2>&1)",
+      "PowerShell($proc = Get-Process nginx -ErrorAction SilentlyContinue; if \\($proc\\) { Write-Host \"Nginx sudah jalan \\(PID: $\\($proc.Id\\)\\) — reload config\"; cd \"C:\\\\nginx-1.28.2\"; .\\\\nginx.exe -s reload 2>&1 } else { Write-Host \"Nginx belum jalan — start\"; cd \"C:\\\\nginx-1.28.2\"; Start-Process -FilePath \".\\\\nginx.exe\" -WindowStyle Hidden; Start-Sleep -Seconds 2; $p = Get-Process nginx -ErrorAction SilentlyContinue; if \\($p\\) { Write-Host \"Nginx started \\(PID: $\\($p.Id\\)\\)\" } else { Write-Host \"Nginx gagal start\" } })",
+      "PowerShell(taskkill /F /IM nginx.exe 2>&1; Start-Sleep -Seconds 1; cd \"C:\\\\nginx-1.28.2\"; Start-Process -FilePath \"C:\\\\nginx-1.28.2\\\\nginx.exe\" -WorkingDirectory \"C:\\\\nginx-1.28.2\" -WindowStyle Hidden; Start-Sleep -Seconds 2; $p = Get-Process nginx -ErrorAction SilentlyContinue; if \\($p\\) { Write-Host \"Nginx started OK \\(PID: $\\($p.Id\\)\\)\" } else { Write-Host \"Nginx gagal start — cek logs\" })"
+    ]
+  }
+}

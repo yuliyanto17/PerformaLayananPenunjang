@@ -41,13 +41,13 @@ const SelectLayananPage = () => {
       setError(null);
       
       const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
-      console.log('📡 Calling API:', `${apiUrl}/layanan`);
+      // console.log('📡 Calling API:', `${apiUrl}/layanan`);
       
       const response = await axios.get(`${apiUrl}/layanan`);
       
-      console.log('✅ Full Response:', response);
-      console.log('✅ Response.data:', response.data);
-      console.log('✅ Response.data.data:', response.data.data);
+      // console.log('✅ Full Response:', response);
+      // console.log('✅ Response.data:', response.data);
+      // console.log('✅ Response.data.data:', response.data.data);
       
       if (response.data && Array.isArray(response.data.data)) {
         console.log('✅ Setting layanan list:', response.data.data);
@@ -132,7 +132,7 @@ const SelectLayananPage = () => {
   }
   
   // Success - Render layanan list
-  console.log('🎨 Rendering', layananList.length, 'layanan');
+  // console.log('🎨 Rendering', layananList.length, 'layanan');
   
   return (
     <div className="min-h-screen bg-gray-50">

@@ -2,13 +2,28 @@ import React, { useEffect, useState, useRef } from "react";
 import { adminApi } from "../api/adminApi";
 import QRCode from "qrcode";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, RefreshCw } from "lucide-react";
+import { X, Maximize2, Minimize2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function KioskFullscreenPage() {
   const navigate = useNavigate();
   const [petugas, setPetugas] = useState([]);
   const [qrCache, setQrCache] = useState({});
+  const [isFullscreen, setIsFullscreen] = useState(!!document.fullscreenElement);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
 
   const load = async () => {
     try {
@@ -48,12 +63,22 @@ export default function KioskFullscreenPage() {
           <h1 className="text-3xl font-extrabold tracking-tight">Kiosk QR Petugas</h1>
           <p className="text-emerald-50 text-sm mt-1">Silakan scan barcode di bawah ini untuk menilai layanan</p>
         </div>
-        <button 
-          onClick={() => navigate('/kiosk')} 
-          className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-5 py-2 rounded-xl transition-all inline-flex items-center gap-2"
-        >
-          <X className="w-5 h-5" /> Kembali
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleFullscreen}
+            className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-5 py-2 rounded-xl transition-all inline-flex items-center gap-2"
+            title={isFullscreen ? "Keluar Fullscreen" : "Masuk Fullscreen"}
+          >
+            {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+            {isFullscreen ? "Keluar Fullscreen" : "Fullscreen"}
+          </button>
+          <button
+            onClick={() => navigate('/kiosk')}
+            className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-5 py-2 rounded-xl transition-all inline-flex items-center gap-2"
+          >
+            <X className="w-5 h-5" /> Kembali
+          </button>
+        </div>
       </div>
 
       {/* Grid */}

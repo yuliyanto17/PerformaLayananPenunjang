@@ -7,8 +7,8 @@ import { ShieldCheck } from "lucide-react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("admin_rad");
-  const [password, setPassword] = useState("Admin123!");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const submit = async (e) => {
@@ -59,7 +59,7 @@ export default function LoginPage() {
                   className="input mt-2"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="admin_rad"
+                  placeholder="username"
                 />
               </div>
 
@@ -70,7 +70,7 @@ export default function LoginPage() {
                   className="input mt-2"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="password"
                 />
               </div>
 

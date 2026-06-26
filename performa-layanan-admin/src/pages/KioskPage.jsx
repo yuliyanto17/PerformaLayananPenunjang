@@ -49,15 +49,7 @@ export default function KioskPage() {
   }, [load]);
 
   const openFullscreenView = () => {
-    // Buka window baru / redirect ke route baru
-    const newWindow = window.open('/kiosk-full', '_blank');
-
-    // Auto fullscreen window baru jika didukung
-    if (newWindow) {
-      newWindow.onload = () => {
-        newWindow.document.documentElement.requestFullscreen();
-      };
-    }
+    window.open('/admin/kiosk-full', '_blank');
   };
 
   const handleEndShift = async (petugas_id) => {

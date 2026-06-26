@@ -117,12 +117,12 @@ const SearchPasienPage = () => {
     }
   };
   
-  console.log('🎨 Render state:', {
-    searchTerm,
-    loading,
-    searched,
-    pasienCount: pasienList.length
-  });
+  // console.log('🎨 Render state:', {
+  //   searchTerm,
+  //   loading,
+  //   searched,
+  //   pasienCount: pasienList.length
+  // });
   
   return (
     <div className="min-h-screen bg-gray-50">

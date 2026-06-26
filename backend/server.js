@@ -115,25 +115,25 @@ const startServer = async () => {
     // Test database connections
     logger.info('Testing database connections...');
     const dbStatus = await db.testConnections();
-    
+
     if (!dbStatus.production || !dbStatus.local) {
       logger.error('Database connection failed');
       process.exit(1);
     }
-    
-    // Start listening
-    app.listen(PORT, () => {
+
+    // Start HTTP server (SSL terminated by Nginx)
+    app.listen(PORT, '127.0.0.1', () => {
       logger.info('═══════════════════════════════════════════');
       logger.info(`🚀 Server started successfully`);
       logger.info(`📦 App Name: ${config.app.name}`);
       logger.info(`🔢 Version: ${config.app.version}`);
       logger.info(`🌍 Environment: ${config.app.env}`);
-      logger.info(`🔗 URL: http://localhost:${PORT}`);
-      logger.info(`📚 API Docs: http://localhost:${PORT}/api/v1`);
+      logger.info(`🔗 URL: http://127.0.0.1:${PORT} (internal)`);
+      logger.info(`🔗 Public: https://192.168.200.155:5000 (via Nginx)`);
       logger.info(`🕐 Started at: ${new Date().toISOString()}`);
       logger.info('═══════════════════════════════════════════');
     });
-    
+
   } catch (error) {
     logger.error('Failed to start server:', error);
     process.exit(1);
