@@ -1,31 +1,38 @@
 import React from "react";
-import { Menu, LogOut } from "lucide-react";
+import { Menu, LogOut, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
-export default function Topbar({ adminMe, onMenu, onLogout }) {
+export default function Topbar({ adminMe, onMenu, onToggle, sidebarCollapsed, onLogout }) {
   return (
-    <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-slate-200">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200 h-[64px] flex items-center">
+      <div className="w-full px-4 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          {/* Mobile: hamburger buka drawer */}
           <button
             onClick={onMenu}
-            className="lg:hidden p-2 rounded-xl hover:bg-slate-100"
-            aria-label="Open menu"
+            className="lg:hidden p-2 rounded-xl hover:bg-slate-100 text-slate-600"
+            aria-label="Buka menu"
           >
-            <Menu className="w-6 h-6 text-slate-700" />
+            <Menu className="w-5 h-5" />
           </button>
 
-          <div>
-            <div className="text-sm font-bold text-slate-900">Admin Panel</div>
-            <div className="text-xs text-slate-500">
-              {adminMe?.username ? `Login: ${adminMe.username}` : "Loading..."}
-            </div>
+          {/* Desktop: toggle collapse sidebar */}
+          <button
+            onClick={onToggle}
+            className="hidden lg:flex p-2 rounded-xl hover:bg-slate-100 text-slate-600 transition-colors"
+            title={sidebarCollapsed ? "Buka sidebar" : "Tutup sidebar"}
+          >
+            {sidebarCollapsed
+              ? <PanelLeftOpen className="w-5 h-5" />
+              : <PanelLeftClose className="w-5 h-5" />
+            }
+          </button>
+
+          <div className="text-sm font-semibold text-slate-700">
+            {adminMe?.username ? `${adminMe.username}` : ""}
           </div>
         </div>
 
-        <button
-          onClick={onLogout}
-          className="btn btn-secondary"
-        >
+        <button onClick={onLogout} className="btn btn-secondary text-sm">
           <LogOut className="w-4 h-4" />
           Logout
         </button>

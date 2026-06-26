@@ -30,7 +30,7 @@ const Badge = ({ children, variant = "gray" }) => {
 
 const EMPTY_FILTERS = {
   q: "",
-  status_penilaian: "",
+  status_penilaian: "submitted",
   date_from: "",
   date_to: "",
 };
@@ -380,45 +380,47 @@ export default function PenilaianPage() {
 
         {/* ── Tabel ── */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-                {columns.map(c => (
-                  <th key={c.key} className="px-4 py-3 font-semibold text-left whitespace-nowrap">
-                    {c.title}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {loading ? (
-                <tr>
-                  <td colSpan={columns.length} className="py-16 text-center">
-                    <div className="flex flex-col items-center gap-2 text-slate-400">
-                      <RefreshCw className="w-6 h-6 animate-spin" />
-                      <span className="text-sm">Memuat data...</span>
-                    </div>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px]">
+              <thead>
+                <tr className="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+                  {columns.map(c => (
+                    <th key={c.key} className="px-4 py-3 font-semibold text-left whitespace-nowrap">
+                      {c.title}
+                    </th>
+                  ))}
                 </tr>
-              ) : rows.length === 0 ? (
-                <tr>
-                  <td colSpan={columns.length} className="py-16 text-center text-slate-400 text-sm">
-                    Tidak ada data ditemukan
-                  </td>
-                </tr>
-              ) : (
-                rows.map((row, i) => (
-                  <tr key={i} className="hover:bg-primary-50/50 transition-colors">
-                    {columns.map(c => (
-                      <td key={c.key} className="px-4 py-3">
-                        {c.render(row)}
-                      </td>
-                    ))}
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {loading ? (
+                  <tr>
+                    <td colSpan={columns.length} className="py-16 text-center">
+                      <div className="flex flex-col items-center gap-2 text-slate-400">
+                        <RefreshCw className="w-6 h-6 animate-spin" />
+                        <span className="text-sm">Memuat data...</span>
+                      </div>
+                    </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : rows.length === 0 ? (
+                  <tr>
+                    <td colSpan={columns.length} className="py-16 text-center text-slate-400 text-sm">
+                      Tidak ada data ditemukan
+                    </td>
+                  </tr>
+                ) : (
+                  rows.map((row, i) => (
+                    <tr key={i} className="hover:bg-primary-50/50 transition-colors">
+                      {columns.map(c => (
+                        <td key={c.key} className="px-4 py-3">
+                          {c.render(row)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <PenilaianDetailModal
